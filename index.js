@@ -1,6 +1,8 @@
 const express = require("express");
 const userRouter = require("./routs/userRouter");
 const productRouter = require("./routs/productRouter");
+const mongoose = require("mongoose");
+const connectDB = require("./db");
 
 const server = express();
 
@@ -11,20 +13,16 @@ server.use('/user',userRouter);
 server.use('/product',productRouter)
 
 
+connectDB().then(()=>{
+  server.listen(8000, () => {
+    console.log("server is listening on port 8000");
+  });
+})
+.catch((err)=>console.log(err));
+;
 
 
-// //http://localhost:8000
 
-// server.use("/user", userRouter);
-// server.use("/product", productRouter);
-
-// server.get("/", (req, res) => {
-//   res.send("server is running");
-// });
-
-server.listen(8000, () => {
-  console.log("server is listening on port 8000");
-});
 
 
 
@@ -46,6 +44,7 @@ server.listen(8000, () => {
 
 //   server.use("/user",firstMiddleware)
 //   server.use("/product",secondMiddleware);
+
 
 
 
