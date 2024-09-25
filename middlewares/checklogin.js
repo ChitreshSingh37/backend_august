@@ -1,3 +1,4 @@
+const apiError = require("../helpers/apiError");
 const Users = require("../models/userModel");
 const jwt = require("jsonwebtoken")
 
@@ -5,12 +6,12 @@ async function checkLogin(req,res,next){
    try {
     let headers = req.headers.authorization;
     if (!headers) {
-      return res.send("no header provided");
+      return next("no header provided")
     }
     let token = headers.split(" ")[1];
 
     if (!token) {
-      return res.send("no toke provided");
+      return next("no token provided")
     }
 
     let payload = jwt.verify(token, "thisisyourprivetkey");
@@ -22,7 +23,7 @@ async function checkLogin(req,res,next){
     next();
     
    } catch (error) {
-    res.send(error)
+    next(new apiError(error.message,500))
    }
 }
 

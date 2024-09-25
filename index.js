@@ -13,6 +13,23 @@ server.use('/user',userRouter);
 server.use('/product',productRouter)
 
 
+
+
+function errMiddleware(err,req,res,next){
+  
+    res.status(err.statuscode).json({
+      errmsg:err.message,
+      stack:err.stack,
+      data:err.data
+    })
+}
+server.use(errMiddleware);
+
+
+
+
+
+
 connectDB().then(()=>{
   server.listen(8000, () => {
     console.log("server is listening on port 8000");

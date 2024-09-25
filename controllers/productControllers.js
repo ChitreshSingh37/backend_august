@@ -17,7 +17,6 @@ async function getSingleProduct(req, res) {
 
 async function createProduct(req, res) {
   try {
-   
 
     let data = req.body;
 
